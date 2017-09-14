@@ -1,0 +1,27 @@
+<div class="card mb-3">
+  <div class="card-header">
+    {{#if user}}
+      <p class="lead mb-0">Welcome, {{user.username}}</p>
+    {{/if}}
+  </div>
+  <div class="card-block">
+    <form method="post" action="/post/tribute">
+      <input type="hidden" name="UserId" value="{{user.id}}"/>
+      <div class="form-group">
+        <label for="{{user.username}}-{{user.id}}-name">Tribute to..</label>
+        <input class="form-control" id="{{user.username}}-{{user.id}}-name" placeholder="Name" name="tribute_name">
+      </div>
+      <div class="form-group">
+        <label for="{{user.username}}-{{user.id}}-type">Post type</label>
+        <select class="form-control" id="{{user.username}}-{{user.id}}-type" name="type">
+          <option>Tribute to loved one</option>
+          <option>Coping advice</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <textarea class="form-control" id="{{user.username}}-{{user.id}}-post" rows="3" placeholder="Post tribute here" name="body"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary lead">Post</button>
+    </form>
+  </div>
+</div>

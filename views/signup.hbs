@@ -3,10 +3,13 @@
     <h2 class="col-md-4 mr-auto ml-auto mb-3">Sign up</h2>
     {{#if errors}}
       {{#each errors}}
-        <div class="alert alert-danger">
+        <div class="col-md-4 ml-auto mr-auto alert alert-danger">
           {{msg}}
         </div>
       {{/each}}
+    {{/if}}
+    {{#if error_msg}}
+      <div class="col-md-4 ml-auto mr-auto alert alert-danger">{{error_msg}}</div>
     {{/if}}
     <div class="form-group d-flex flex-column align-items-center">
       <label class="col-md-4 control-label" for="textinput">Full name</label>

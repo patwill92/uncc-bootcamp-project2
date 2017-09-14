@@ -15,6 +15,7 @@ const db = require("./models");
 
 const routes = require("./routes/index");
 const users = require("./routes/users");
+const posts = require("./routes/post-api");
 
 app.engine('hbs', exphbs({defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', 'hbs');
@@ -64,9 +65,10 @@ app.use((req, res, next) => {
 
 app.use('/', routes);
 app.use('/users', users);
+app.use('/post', posts);
 
 const PORT = process.env.PORT || 3000;
-db.sequelize.sync({ force: true }).then(() => {
+db.sequelize.sync().then(() => {
   app.listen(PORT, () => {
     console.log("App listening on PORT " + PORT);
   });
