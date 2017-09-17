@@ -1,11 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const multer  = require('multer');
+const multer = require('multer');
 const fs = require('fs');
-const upload = multer({ dest: './uploads/' });
+const upload = multer({dest: './uploads/'});
 
-const {generateHash} = require('../utilities/db_functions');
+const {generateHash, ensureAuthenticated, ensureUser} = require('../utilities/db_functions');
 const {User} = require("../models");
 
 router.get('/signup', (req, res) => {
@@ -62,14 +62,39 @@ router.post('/signup', upload.single('avatar'), (req, res) => {
 
 router.post('/login',
   passport.authenticate('local', {successRedirect: '/', failureRedirect: '/user/login', failureFlash: true}),
-  function (req, res) {
+  (req, res) => {
     res.redirect('/');
-  });
+  }
+);
 
-router.get('/logout', function (req, res) {
+router.get('/logout', (req, res) => {
   req.logout();
   req.flash('success_msg', 'You are logged out');
   res.redirect('/user/login');
+});
+
+router.get('/edit/:username', ensureUser, (req, res) => {
+  res.render('edit')
+});
+
+router.put('/edit/:username', ensureUser, upload.single('avatar'), (req, res) => {
+  let files = {
+    img: req.file ? fs.readFileSync(req.file.path): '',
+    imgType: req.file ? req.file.mimetype: ''
+  };
+  let myPost = {...req.body, ...files};
+  let updatedPost = {};
+  for (let prop in myPost) {
+    if(myPost[prop])
+      updatedPost[prop] = myPost[prop];
+  }
+  User.update(updatedPost, {where: {id: req.user.id}}).then(() => {
+    res.redirect(`/user/edit/${req.user.username}`);
+  });
+});
+
+router.get('/:username', ensureAuthenticated, (req, res) => {
+  res.render('profile')
 });
 
 module.exports = router;

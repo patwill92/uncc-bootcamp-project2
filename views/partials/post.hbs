@@ -1,4 +1,4 @@
-<div class="card mb-3">
+<div class="card card-outline-success mb-3">
   <div class="card-header pb-0">
     <ul class="nav nav-tabs border-bottom-0">
       <li class="nav-item">
@@ -26,7 +26,6 @@
   <div class="card-block tribute">
     <form method="post" enctype="multipart/form-data" action="/post/tribute">
       <input type="hidden" name="UserId" value="{{user.id}}"/>
-      <input type="hidden" name="type" value="tribute"/>
       <div class="form-group d-flex flex-row align-items-center">
         <div class="p-0 ml-3 flex-last file-group">
           <div class="input-group">
@@ -73,7 +72,6 @@
   <div class="card-block advice">
     <form method="post" action="/post/advice">
       <input type="hidden" name="UserId" value="{{user.id}}"/>
-      <input type="hidden" name="type" value="advice"/>
       <input type="hidden" name="tribute_name" value="coping-advice"/>
       <div class="form-group">
         <textarea class="form-control" id="{{user.username}}-{{user.id}}-post" rows="3"

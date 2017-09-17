@@ -16,6 +16,17 @@ module.exports = {
       });
     })
   },
+  ensureUser(req, res, next) {
+    if (req.isAuthenticated() && req.user.username === req.params.username) {
+      next();
+    } else {
+      if (req.isAuthenticated()) {
+        res.redirect(`/user/${req.user.username}`);
+      } else {
+        res.redirect('/user/login');
+      }
+    }
+  },
   ensureAuthenticated(req, res, next) {
     if (req.isAuthenticated()) {
       next();

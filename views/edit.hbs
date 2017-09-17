@@ -1,0 +1,55 @@
+<div class="container mt-3">
+  <div class="jumbotron mb-3">
+    <h2 class="display-3">Edit Profile</h2>
+  </div>
+  <form method="post" enctype="multipart/form-data" action="/user/edit/{{user.username}}?_method=PUT">
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="textinput">Full name</label>
+      <div class="col-md-4">
+        <input id="textinput" name="name" type="text" placeholder="John Doe" class="form-control input-md">
+      </div>
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="avatar">Your Picture</label>
+      <div class="col-md-4">
+        <input type="file" class="form-control-file" id="avatar" aria-describedby="fileHelp" name="avatar">
+      </div>
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="selectbasic">City, State</label>
+      <div class="col-md-4">
+        <input id="textinput" name="country" type="text" placeholder="i.e. Miami, FL " class="form-control input-md">
+      </div>
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="email">E-mail</label>
+      <div class="col-md-4">
+        <input id="email" name="email" type="text" placeholder="john.smith@mail.com" class="form-control input-md">
+      </div>
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="username">Username</label>
+      <div class="col-md-4">
+        <input id="username" name="username" type="text" class="form-control input-md">
+      </div>
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="passwordinput">Password</label>
+      <div class="col-md-4">
+        <input id="passwordinput" name="password" type="password" placeholder="Enter your password" class="form-control input-md">
+      </div>
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="passwordinput">Confirm password </label>
+      <div class="col-md-4">
+        <input id="passwordinput" name="password2" type="password" placeholder="Confirm password" class="form-control input-md">
+      </div>
+    </div>
+    <div class="form-group d-flex flex-column align-items-center">
+      <label class="col-md-4 control-label" for="singlebutton"></label>
+      <div class="col-md-4">
+        <button type="submit" id="singlebutton"  class="btn btn-primary">Register</button>
+      </div>
+    </div>
+  </form>
+</div>

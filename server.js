@@ -7,6 +7,7 @@ const expressValidator = require('express-validator');
 const flash = require('connect-flash');
 const session = require('express-session');
 const passport = require('passport');
+const methodOverride = require("method-override");
 
 const app = express();
 
@@ -26,7 +27,7 @@ app.set('view engine', 'hbs');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
-
+app.use(methodOverride("_method"));
 app.use(session({
   secret: 'pwill',
   saveUninitialized: true,

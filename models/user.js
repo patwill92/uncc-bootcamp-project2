@@ -8,7 +8,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     img: {
-      type: DataTypes.BLOB,
+      type: DataTypes.BLOB('medium'),
       allowNull: false,
       len: [1]
     },

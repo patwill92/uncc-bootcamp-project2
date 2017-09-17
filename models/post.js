@@ -10,7 +10,7 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     img: {
-      type: DataTypes.BLOB,
+      type: DataTypes.BLOB('medium'),
       len: [1]
     },
     imgType: {
@@ -34,11 +34,8 @@ module.exports = function (sequelize, DataTypes) {
       }
     },
     type: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: [1]
-      }
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   });
   Post.associate = (models) => {

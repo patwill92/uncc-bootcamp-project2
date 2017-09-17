@@ -86,3 +86,23 @@ h2 {
 .post-image{
   max-width: 150px;
  }
+.post-tribute:hover{
+  text-decoration: none;
+}
+.post-tribute{
+  text-decoration: none;
+}
+.post-advice:hover{
+  text-decoration: none;
+  color:rgba(0,0,0,0.7);
+}
+.post-advice{
+  text-decoration: none;
+  color:black;
+}
+.post-footer-nav, .post-footer-form{
+  border-top: 0.5px solid rgba(0, 0, 0, 0.125);
+}
+.comments, .post-footer-form{
+  background-color: white;
+}
