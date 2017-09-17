@@ -7,6 +7,18 @@ module.exports = function (sequelize, DataTypes) {
         len: [1]
       }
     },
+    img: {
+      type: DataTypes.BLOB,
+      allowNull: false,
+      len: [1]
+    },
+    imgType: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [1]
+      }
+    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,

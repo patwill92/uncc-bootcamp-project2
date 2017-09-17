@@ -1,27 +1,85 @@
 <div class="card mb-3">
-  <div class="card-header">
-    {{#if user}}
-      <p class="lead mb-0">Welcome, {{user.username}}</p>
-    {{/if}}
+  <div class="card-header pb-0">
+    <ul class="nav nav-tabs border-bottom-0">
+      <li class="nav-item">
+        <span class="nav-link tribute-tab active">Tribute</span>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link coping-tab">Coping advice</span>
+      </li>
+    </ul>
+    <script>
+      $('.tribute-tab').on('click', (e) => {
+        $('.tribute-tab').addClass('active');
+        $('.tribute').css('display', 'block');
+        $('.coping-tab').removeClass('active');
+        $('.advice').css('display', 'none');
+      });
+      $('.coping-tab').on('click', (e) => {
+        $('.coping-tab').addClass('active');
+        $('.advice').css('display', 'block');
+        $('.tribute-tab').removeClass('active');
+        $('.tribute').css('display', 'none');
+      })
+    </script>
   </div>
-  <div class="card-block">
-    <form method="post" action="/post/tribute">
+  <div class="card-block tribute">
+    <form method="post" enctype="multipart/form-data" action="/post/tribute">
       <input type="hidden" name="UserId" value="{{user.id}}"/>
-      <div class="form-group">
-        <label for="{{user.username}}-{{user.id}}-name">Tribute to..</label>
-        <input class="form-control" id="{{user.username}}-{{user.id}}-name" placeholder="Name" name="tribute_name">
+      <input type="hidden" name="type" value="tribute"/>
+      <div class="form-group d-flex flex-row align-items-center">
+        <div class="p-0 ml-3 flex-last file-group">
+          <div class="input-group">
+            <label class="btn btn-default btn-sm btn-file mb-0 border-0">
+              <i class="fa fa-image mr-1"></i>Photo <input type="file" style="display: none;" id="avatar"
+                                                           aria-describedby="fileHelp" name="avatar">
+            </label>
+            <input type="text" class="form-control my-img pt-1 pb-1 pl-1" readonly>
+          </div>
+        </div>
+        <div class="p-0">
+          <input class="form-control" id="{{user.username}}-{{user.id}}-name" placeholder="Tribute to..."
+                 name="tribute_name">
+        </div>
       </div>
       <div class="form-group">
-        <label for="{{user.username}}-{{user.id}}-type">Post type</label>
-        <select class="form-control" id="{{user.username}}-{{user.id}}-type" name="type">
-          <option>Tribute to loved one</option>
-          <option>Coping advice</option>
-        </select>
+        <textarea class="form-control" id="{{user.username}}-{{user.id}}-post" rows="3" placeholder="Post tribute here, {{user.name}}"
+                  name="body"></textarea>
       </div>
+      <button type="submit" class="btn btn-primary btn-sm lead">Post Tribute</button>
+    </form>
+  </div>
+  <script>
+    $(function() {
+      $(document).on('change', ':file', function() {
+        let input = $(this),
+                numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        input.trigger('fileselect', [numFiles, label]);
+      });
+      $(document).ready( function() {
+        $(':file').on('fileselect', function(event, numFiles, label) {
+          let input = $(this).parents('.input-group').find(':text'),
+                  log = numFiles > 1 ? numFiles + ' files selected' : label;
+          if( input.length ) {
+            input.val(log);
+          } else {
+            if( log ) alert(log);
+          }
+        });
+      });
+    });
+  </script>
+  <div class="card-block advice">
+    <form method="post" action="/post/advice">
+      <input type="hidden" name="UserId" value="{{user.id}}"/>
+      <input type="hidden" name="type" value="advice"/>
+      <input type="hidden" name="tribute_name" value="coping-advice"/>
       <div class="form-group">
-        <textarea class="form-control" id="{{user.username}}-{{user.id}}-post" rows="3" placeholder="Post tribute here" name="body"></textarea>
+        <textarea class="form-control" id="{{user.username}}-{{user.id}}-post" rows="3"
+                  placeholder="Write advice here, {{user.name}}" name="body"></textarea>
       </div>
-      <button type="submit" class="btn btn-primary lead">Post</button>
+      <button type="submit" class="btn btn-primary btn-sm lead">Post Advice</button>
     </form>
   </div>
 </div>

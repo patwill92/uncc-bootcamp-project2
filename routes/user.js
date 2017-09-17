@@ -1,32 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcryptjs');
+const multer  = require('multer');
+const fs = require('fs');
+const upload = multer({ dest: './uploads/' });
 
-const {comparePassword} = require('../utilities/db_functions');
+const {generateHash} = require('../utilities/db_functions');
 const {User} = require("../models");
-
-function generateHash(password, done) {
-  return new Promise((resolve, reject) => {
-    bcrypt.genSalt(10, function (err, salt) {
-      bcrypt.hash(password, salt, null, done).then((res) => {
-        resolve(res);
-      });
-    });
-  })
-}
 
 router.get('/signup', (req, res) => {
   res.render('signup');
 });
 
 router.get('/login', (req, res) => {
-  res.render('login');
+  res.render('login')
 });
 
-router.post('/signup', (req, res) => {
+router.post('/signup', upload.single('avatar'), (req, res) => {
   console.log(req.body);
+  console.log(req.file);
   req.checkBody('name', 'Name is required').notEmpty();
   req.checkBody('email', 'Email is required').notEmpty();
   req.checkBody('email', 'Email is not valid').isEmail();
@@ -41,6 +33,8 @@ router.post('/signup', (req, res) => {
       generateHash(req.body.password).then((result) => {
         let user = {
           name: req.body.name,
+          img: fs.readFileSync(req.file.path),
+          imgType: req.file.mimetype,
           email: req.body.email,
           country: req.body.country,
           username: req.body.username,
@@ -50,7 +44,6 @@ router.post('/signup', (req, res) => {
           req.flash('success_msg', 'You are registered and can now login');
           res.redirect('login')
         }).catch((err) => {
-
           switch (err.errors[0].path) {
             case 'email':
               req.flash('error_msg', 'Email already exists');
@@ -67,35 +60,8 @@ router.post('/signup', (req, res) => {
   })
 });
 
-passport.use(new LocalStrategy(
-  function (username, password, done) {
-    User.findOne({where: {username}}).then(user => {
-      if (!user) {
-        done(null, false, {message: 'Unknown User'});
-      }
-      comparePassword(password, user.password, function (err, isMatch) {
-        if (err) throw err;
-        if (isMatch) {
-          return done(null, user);
-        } else {
-          return done(null, false, {message: 'Invalid password'});
-        }
-      });
-    });
-  }));
-
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function (id, done) {
-  User.findOne({where: {id}}).then(user => {
-    done(null, user)
-  });
-});
-
 router.post('/login',
-  passport.authenticate('local', {successRedirect: '/', failureRedirect: '/users/login', failureFlash: true}),
+  passport.authenticate('local', {successRedirect: '/', failureRedirect: '/user/login', failureFlash: true}),
   function (req, res) {
     res.redirect('/');
   });
@@ -103,7 +69,7 @@ router.post('/login',
 router.get('/logout', function (req, res) {
   req.logout();
   req.flash('success_msg', 'You are logged out');
-  res.redirect('/users/login');
+  res.redirect('/user/login');
 });
 
 module.exports = router;

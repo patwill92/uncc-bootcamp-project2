@@ -3,6 +3,7 @@
     <div class="card-block">
       <h4 class="card-title">Tribute to: {{this.tribute_name}}</h4>
       <h6 class="card-subtitle mb-2 text-muted">by: {{this.User.name}}</h6>
+      <img class="post-image" src="/api/img/post/{{this.id}}" alt="tribute-image">
       <p class="card-text">{{this.body}}</p>
       <p class="card-text">
         <small class="text-muted">Posted {{this.time}}</small>
@@ -10,8 +11,8 @@
     </div>
     <div class="card-footer text-muted">
       <div class="d-flex justify-content-between">
-        <a data-toggle="collapse" data-target="#comment-{{this.User.username}}-{{this.id}}" aria-expanded="false"
-           aria-controls="post-comment">
+        <a data-toggle="collapse" data-target="#post-{{this.User.username}}-{{this.id}}" aria-expanded="false"
+           aria-controls="post-{{this.User.username}}-{{this.id}}">
           Comment <i class="fa fa-comment-o"></i>
         </a>
         <a data-toggle="collapse" data-target="#post-{{this.User.username}}-{{this.id}}" aria-expanded="false"
@@ -21,20 +22,25 @@
       </div>
     </div>
     <div class="card-footer text-muted p-0 border-top-0">
-      <div class="collapse comments" id="post-{{this.User.username}}-{{this.id}}">
-        <ul class="list-group" id="all-comments-{{this.id}}">
-          {{#each this.Comments}}
-            <li class="list-group-item flex-column align-items-start">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">{{this.User.username}}</h5>
-                <small>{{this.time}}</small>
-              </div>
-              <p class="mb-1">{{this.text}}</p>
-            </li>
-          {{/each}}
-        </ul>
-      </div>
-      <div class="collapse mt-3" id="comment-{{this.User.username}}-{{this.id}}">
+      <div class="collapse" id="post-{{this.User.username}}-{{this.id}}">
+        <div class="comments">
+          <ul class="list-unstyled" id="all-comments-{{this.id}}">
+            {{#each this.Comments}}
+              <li class="media">
+                <div class="d-flex mr-3 ">
+                  <img class="comment-avatar rounded-circle" src="/api/img/{{this.User.id}}" alt="user-avatar">
+                </div>
+                <div class="media-body">
+                  <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1">{{this.User.username}}</h5>
+                    <small>{{this.time}}</small>
+                  </div>
+                  <p class="mb-1">{{this.text}}</p>
+                </div>
+              </li>
+            {{/each}}
+          </ul>
+        </div>
         {{> comment}}
       </div>
     </div>

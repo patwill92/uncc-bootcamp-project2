@@ -9,6 +9,16 @@ module.exports = function (sequelize, DataTypes) {
         len: [1]
       }
     },
+    img: {
+      type: DataTypes.BLOB,
+      len: [1]
+    },
+    imgType: {
+      type: DataTypes.STRING,
+      validate: {
+        len: [1]
+      }
+    },
     time: {
       type     : DataTypes.STRING,
       get      : function()  {

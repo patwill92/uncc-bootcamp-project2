@@ -57,3 +57,32 @@ h2 {
   overflow-y: auto;
   max-height: 400px;
 }
+
+.comment-avatar{
+  max-width: 32px;
+  max-height: 32px;
+}
+
+.media{
+  padding: 0.75rem 1.25rem;
+}
+
+.advice {
+  display: none;
+}
+
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.my-img {
+  background: transparent !important;
+  border: none !important;
+  font-size: 0.875rem !important;
+}
+.nav-link:hover {
+  cursor: pointer;
+}
+.post-image{
+  max-width: 150px;
+ }

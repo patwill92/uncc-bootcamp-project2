@@ -28,37 +28,6 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
         integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
         crossorigin="anonymous"></script>
-<script>
-  $('.add-comment').on('click', (event) => {
-    event.preventDefault();
-    axios.get('/comment').then((res) => {
-      console.log(res.data);
-      let myUsername = res.data.username;
-      let myText = $(`#comment-text-${event.currentTarget.id.replace( /^\D+/g, '')}`).val();
-      let currentTime = moment().fromNow();
-      let obj = {
-        text: myText,
-        UserId: res.data.id,
-        username: myUsername,
-        PostId: $(`#PostId-${event.currentTarget.id.replace( /^\D+/g, '')}`).val()
-      };
-      console.log(obj);
-      $.post("/comment", obj).then((result) => {
-        let html =
-        `
-        <li class="list-group-item flex-column align-items-start">
-              <div class="d-flex w-100 justify-content-between">
-                <h5 class="mb-1">${myUsername}</h5>
-                <small>${currentTime}</small>
-              </div>
-              <p class="mb-1">${myText}</p>
-            </li>
-        `;
-        $(`#all-comments-${event.currentTarget.id.replace( /^\D+/g, '')}`).append(html);
-        console.log(result);
-      });
-    });
-  });
-</script>
+<script defer src="/assets/js/load-comments.js"></script>
 </body>
 </html>
